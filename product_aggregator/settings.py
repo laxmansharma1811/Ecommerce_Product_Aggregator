@@ -75,12 +75,12 @@ WSGI_APPLICATION = 'product_aggregator.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Add these settings to your settings.py file
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -92,16 +92,16 @@ EMAIL_HOST_PASSWORD = 'Add your password'
 
 
 
-# DATABASES = {
-# 'default': {
-# 'ENGINE': 'django.db.backends.postgresql',
-# 'NAME': 'product_aggregator',
-# 'USER': 'postgres',
-# 'PASSWORD': 'admin',
-# 'HOST': 'localhost',
-# 'PORT': '5432', # default PostgreSQL port
-# }
-# }
+DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.postgresql',
+'NAME': 'product_aggregator',
+'USER': 'postgres',
+'PASSWORD': 'admin',
+'HOST': 'localhost',
+'PORT': '5432', # default PostgreSQL port
+}
+}
 
 
 # DATABASES = {
@@ -110,6 +110,21 @@ EMAIL_HOST_PASSWORD = 'Add your password'
 #         "NAME": "mydatabase",
 #     }
 # }
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'neondb'),
+        'USER': os.getenv('DB_USER', 'neondb_owner'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'npg_HREXW4lnPf9j'),
+        'HOST': os.getenv('DB_HOST', 'ep-old-tooth-a5i6xe2k-pooler.us-east-2.aws.neon.tech'),
+        'PORT': '5432',
+        'OPTIONS': {'sslmode': 'require'},
+    }
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
