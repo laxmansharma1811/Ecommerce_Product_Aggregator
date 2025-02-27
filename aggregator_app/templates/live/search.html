@@ -2,15 +2,13 @@
 {% block title %}Daraz Search{% endblock %}
 {% block content %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <!-- Search Bar -->
-    <div class="bg-white shadow-md py-6 px-4 md:px-10 flex flex-col md:flex-row items-center justify-center gap-4">
+    <div class="bg-white dark:bg-gray-800 shadow-md py-6 px-4 md:px-10 flex flex-col md:flex-row items-center justify-center gap-4">
         <input
             type="text"
             id="searchInput"
-            class="w-full md:w-2/3 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full md:w-2/3 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
             placeholder="Search for products..."
         />
         <button
@@ -36,13 +34,13 @@
             alt="Loading..."
             class="w-16 h-16"
         />
-        <p class="text-gray-500 mt-2">Searching for products...</p>
+        <p class="text-gray-500 dark:text-gray-400 mt-2">Searching for products...</p>
     </div>
 
     <!-- Error Message -->
     <div
         id="errorMessage"
-        class="error-message hidden text-center text-red-500 font-medium py-4"
+        class="error-message hidden text-center text-red-500 dark:text-red-400 font-medium py-4"
     ></div>
 
     <!-- Product Grid -->
@@ -114,17 +112,17 @@
 
         products.forEach(function (product) {
             const productCard = `
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
                     <img
                         src="${product.image_url}"
                         alt="${product.product_name}"
                         class="w-full h-48 object-cover"
                     />
                     <div class="p-4">
-                        <h3 class="text-lg font-semibold text-gray-800 truncate">${product.product_name}</h3>
-                        <p class="text-gray-600 mt-2"><strong>Price:</strong> ${product.product_price}</p>
-                        <p class="text-gray-600"><strong>Rating:</strong> ${product.rating}</p>
-                        <p class="text-gray-600"><strong>Reviews:</strong> ${product.number_of_ratings}</p>
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-white truncate">${product.product_name}</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2"><strong>Price:</strong> ${product.product_price}</p>
+                        <p class="text-gray-600 dark:text-gray-300"><strong>Rating:</strong> ${product.rating}</p>
+                        <p class="text-gray-600 dark:text-gray-300"><strong>Reviews:</strong> ${product.number_of_ratings}</p>
                         <a
                             href="${product.product_link}"
                             target="_blank"
@@ -132,7 +130,7 @@
                         >
                             View on Daraz
                         </a>
-                        <div class="text-gray-600 mt-4">
+                        <div class="text-gray-600 dark:text-gray-300 mt-4">
                             <p><strong>Specifications:</strong></p>
                             <p>${product.specifications}</p>
                         </div>
@@ -169,5 +167,20 @@
             searchProducts();
         }
     });
+
+    // Function to toggle dark mode
+    function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+        localStorage.setItem('darkMode', document.documentElement.classList.contains('dark') ? 'enabled' : 'disabled');
+    }
+
+    // Check for saved dark mode preference
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.documentElement.classList.add('dark');
+    }
+
+    // Add event listener for dark mode toggle (assuming you have a toggle button with id 'dark-mode-toggle')
+    document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
 </script>
 {% endblock %}
+
