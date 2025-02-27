@@ -24,32 +24,56 @@
             min-width: 640px;
         }
     }
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-track {
+        background: #374151;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #4B5563;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #6B7280;
+    }
 </style>
 
-<div class="bg-gray-100 min-h-screen">
+<div class="bg-gray-100 dark:bg-gray-900 min-h-screen">
     <div class="container mx-auto px-4 py-8">
-        <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center text-indigo-700">Product Comparison</h2>
+        <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center text-indigo-700 dark:text-indigo-400">Product Comparison</h2>
         
+        
+
         <!-- Product Comparison Table -->
-        <div class="table-container shadow-xl rounded-lg bg-white mb-8 overflow-hidden">
+        <div class="table-container shadow-xl rounded-lg bg-white dark:bg-gray-800 mb-8 overflow-hidden">
             <table class="w-full table-auto">
                 <thead>
-                    <tr class="bg-indigo-100 text-left">
-                        <th class="border-b px-4 py-2 text-indigo-800 w-1/4">Feature</th>
+                    <tr class="bg-indigo-100 dark:bg-indigo-900 text-left">
+                        <th class="border-b dark:border-gray-700 px-4 py-2 text-indigo-800 dark:text-indigo-200 w-1/4">Feature</th>
                         {% for product in products %}
-                        <th class="border-b px-4 py-4 w-1/{{ products|length|add:1 }}">
+                        <th class="border-b dark:border-gray-700 px-4 py-4 w-1/{{ products|length|add:1 }}">
                             <div class="relative">
                                 <!-- Remove Product Button -->
                                 <form method="POST" class="absolute top-0 right-0">
                                     {% csrf_token %}
                                     <button type="submit" name="remove_product" value="{{ product.id }}"
-                                            class="text-red-500 text-lg font-semibold hover:text-red-700 transition-colors duration-300">&times;</button>
+                                            class="text-red-500 dark:text-red-400 text-lg font-semibold hover:text-red-700 dark:hover:text-red-300 transition-colors duration-300">&times;</button>
                                 </form>
                                 <!-- Product Image and Link -->
                                 <div class="hover-scale">
                                     <img src="{{ product.image_url }}" alt="{{ product.product_name }}"
-                                         class="w-24 h-24 md:w-32 md:h-32 object-contain mx-auto mb-2 border border-gray-200 p-2 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
-                                    <a href="{{ product.product_link }}" target="_blank" class="text-indigo-600 hover:text-indigo-800 hover:underline text-center block transition-colors duration-300">
+                                         class="w-24 h-24 md:w-32 md:h-32 object-contain mx-auto mb-2 border border-gray-200 dark:border-gray-600 p-2 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300">
+                                    <a href="{{ product.product_link }}" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 hover:underline text-center block transition-colors duration-300">
                                         <p class="font-semibold text-xs md:text-sm">{{ product.product_name }}</p>
                                     </a>
                                 </div>
@@ -65,31 +89,31 @@
                 </thead>
                 <tbody>
                     <!-- Price Row -->
-                    <tr class="bg-white hover:bg-gray-50 transition-colors duration-300">
-                        <td class="border-b px-4 py-3 font-semibold text-gray-700">Price</td>
+                    <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300">
+                        <td class="border-b dark:border-gray-700 px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Price</td>
                         {% for product in products %}
-                        <td class="border-b px-4 py-3 text-center font-bold text-green-600 text-base md:text-lg">{{ product.product_price }}</td>
+                        <td class="border-b dark:border-gray-700 px-4 py-3 text-center font-bold text-green-600 dark:text-green-400 text-base md:text-lg">${{ product.product_price }}</td>
                         {% endfor %}
                     </tr>
                     <!-- Rating Row -->
-                    <tr class="bg-gray-50 hover:bg-gray-100 transition-colors duration-300">
-                        <td class="border-b px-4 py-3 font-semibold text-gray-700">Rating</td>
+                    <tr class="bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-300">
+                        <td class="border-b dark:border-gray-600 px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Rating</td>
                         {% for product in products %}
-                        <td class="border-b px-4 py-3 text-center">
+                        <td class="border-b dark:border-gray-600 px-4 py-3 text-center">
                             <div class="flex items-center justify-center">
                                 <span class="text-yellow-400 text-lg md:text-xl mr-1">★</span>
-                                <span class="font-bold text-sm md:text-base">{{ product.rating }}</span>
+                                <span class="font-bold text-sm md:text-base dark:text-white">{{ product.rating }}</span>
                             </div>
-                            <span class="text-xs text-gray-500">({{ product.number_of_ratings }} ratings)</span>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">({{ product.number_of_ratings }} ratings)</span>
                         </td>
                         {% endfor %}
                     </tr>
                     <!-- Specifications Row -->
-                    <tr class="bg-white hover:bg-gray-50 transition-colors duration-300">
-                        <td class="border-b px-4 py-3 font-semibold text-gray-700">Specifications</td>
+                    <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-300">
+                        <td class="border-b dark:border-gray-700 px-4 py-3 font-semibold text-gray-700 dark:text-gray-300">Specifications</td>
                         {% for product in products %}
-                        <td class="border-b px-4 py-3 text-xs">
-                            <div class="whitespace-pre-line text-gray-700 max-h-32 md:max-h-40 overflow-y-auto custom-scrollbar">
+                        <td class="border-b dark:border-gray-700 px-4 py-3 text-xs">
+                            <div class="whitespace-pre-line text-gray-700 dark:text-gray-300 max-h-32 md:max-h-40 overflow-y-auto custom-scrollbar">
                                 {{ product.specifications }}
                             </div>
                         </td>
@@ -122,35 +146,150 @@
     </div>
 </div>
 
-<script>
-// Custom scrollbar styling
-const style = document.createElement('style');
-style.textContent = `
-    .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 3px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-`;
-document.head.append(style);
 
-// Hover effect for product images
-document.querySelectorAll('.hover-scale').forEach(item => {
-    item.addEventListener('mouseover', () => {
-        item.style.transform = 'scale(1.05)';
+
+<script>
+    // Price Comparison Chart
+    document.addEventListener('DOMContentLoaded', function() {
+        const priceData = [
+            {% for product in products %}
+                {{ product.product_price|safe }},
+            {% endfor %}
+        ];
+
+        const productNames = [
+            {% for product in products %}
+                '{{ product.product_name|truncatechars:25 }}',
+            {% endfor %}
+        ];
+
+        const isDarkMode = document.documentElement.classList.contains('dark');
+
+        const priceOptions = {
+            series: [{
+                name: 'Price',
+                data: priceData
+            }],
+            chart: {
+                type: 'bar',
+                height: 350,
+                toolbar: {
+                    show: true
+                },
+                background: isDarkMode ? '#1F2937' : '#FFFFFF',
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    borderRadius: 4,
+                    columnWidth: '60%',
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            xaxis: {
+                categories: productNames,
+                labels: {
+                    style: {
+                        fontSize: '12px',
+                        fontWeight: 600,
+                        colors: isDarkMode ? '#D1D5DB' : '#4B5563'
+                    }
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Price',
+                    style: {
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        color: isDarkMode ? '#D1D5DB' : '#4B5563'
+                    }
+                },
+                labels: {
+                    formatter: function(value) {
+                        return '$' + value;
+                    },
+                    style: {
+                        colors: isDarkMode ? '#D1D5DB' : '#4B5563'
+                    }
+                }
+            },
+            colors: ['#4F46E5'],
+            title: {
+                text: 'Price Comparison',
+                align: 'center',
+                style: {
+                    fontSize: '18px',
+                    fontWeight: 'bold',
+                    color: isDarkMode ? '#F3F4F6' : '#1F2937'
+                }
+            },
+            grid: {
+                borderColor: isDarkMode ? '#374151' : '#E5E7EB'
+            },
+            theme: {
+                mode: isDarkMode ? 'dark' : 'light'
+            }
+        };
+
+        const priceChart = new ApexCharts(document.querySelector("#priceChart"), priceOptions);
+        priceChart.render();
+
+        // Update chart on dark mode toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function() {
+                const isDarkMode = document.documentElement.classList.contains('dark');
+                priceChart.updateOptions({
+                    chart: {
+                        background: isDarkMode ? '#1F2937' : '#FFFFFF',
+                    },
+                    xaxis: {
+                        labels: {
+                            style: {
+                                colors: isDarkMode ? '#D1D5DB' : '#4B5563'
+                            }
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            style: {
+                                color: isDarkMode ? '#D1D5DB' : '#4B5563'
+                            }
+                        },
+                        labels: {
+                            style: {
+                                colors: isDarkMode ? '#D1D5DB' : '#4B5563'
+                            }
+                        }
+                    },
+                    title: {
+                        style: {
+                            color: isDarkMode ? '#F3F4F6' : '#1F2937'
+                        }
+                    },
+                    grid: {
+                        borderColor: isDarkMode ? '#374151' : '#E5E7EB'
+                    },
+                    theme: {
+                        mode: isDarkMode ? 'dark' : 'light'
+                    }
+                });
+            });
+        }
     });
-    item.addEventListener('mouseout', () => {
-        item.style.transform = 'scale(1)';
+
+    // Hover effect for product images
+    document.querySelectorAll('.hover-scale').forEach(item => {
+        item.addEventListener('mouseover', () => {
+            item.style.transform = 'scale(1.05)';
+        });
+        item.addEventListener('mouseout', () => {
+            item.style.transform = 'scale(1)';
+        });
     });
-});
 </script>
 
 {% endblock %}
